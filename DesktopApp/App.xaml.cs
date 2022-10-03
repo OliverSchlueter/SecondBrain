@@ -8,6 +8,8 @@ namespace DesktopApp
     /// </summary>
     public partial class App
     {
+        public const string Version = "v0.0.1 [DEV]";
+        
         [STAThread]
         public static void Main()
         {

@@ -15,7 +15,9 @@ namespace DesktopApp
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            Title = Title + " " + App.Version;
+
             var contactsCategory = _rootCategory.AddSubCategory("Contacts");
             contactsCategory.Values.Add(new ContactNote(DateTime.Now, "+49 112233", "Oliver", "Schlüter"));
             contactsCategory.Values.Add(new ContactNote(DateTime.Now, "+49 445566", "Max", "Mustermann"));

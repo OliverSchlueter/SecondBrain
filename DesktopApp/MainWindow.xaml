@@ -36,6 +36,7 @@
         </Setter>
         </Style>
     </Window.Resources>
+    
     <StackPanel Orientation="Horizontal">
         <StackPanel Name="StackPanelSidebar"
                     Margin="0 0 10 0"
