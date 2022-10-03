@@ -65,8 +65,9 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="notes\Category.cs" />
+        <Compile Include="notes\ContactNote.cs" />
         <Compile Include="notes\Note.cs" />
-        <Compile Include="notes\TextNote.cs" />
+        <Compile Include="notes\PlaintextNote.cs" />
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>

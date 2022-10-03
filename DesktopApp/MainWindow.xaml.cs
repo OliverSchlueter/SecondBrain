@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using DesktopApp.notes;
 
@@ -11,19 +13,19 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow
     {
-        Category<string> rootCategory = new Category<string>("");
+        private Category<Note> _rootCategory = new Category<Note>("");
         public MainWindow()
         {
             InitializeComponent();
-
             
-            var sub1 = rootCategory.AddSubCategory("Contacts");
-            sub1.Values.Add("Oliver Schlüter");
-            sub1.Values.Add("Max Mustermann");
-            var sub2 = rootCategory.AddSubCategory("Notes");
-            sub2.Values.Add("Note1");
-            sub2.Values.Add("Note2");
-            rootCategory.ToTreeView(TreeViewOverview);
+            var contactsCategory = _rootCategory.AddSubCategory("Contacts");
+            contactsCategory.Values.Add(new ContactNote(DateTime.Now, "+49 112233", "Oliver", "Schlüter"));
+            contactsCategory.Values.Add(new ContactNote(DateTime.Now, "+49 445566", "Max", "Mustermann"));
+            
+            var quickNotesCategory = _rootCategory.AddSubCategory("Quick Notes");
+            quickNotesCategory.Values.Add(new PlaintextNote("today", DateTime.Now,"Pog"));
+            
+            _rootCategory.ToTreeView(TreeViewOverview);
         }
         
         private void ListBoxAutoCompleteResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,9 +77,26 @@ namespace DesktopApp
 
                         break;
                     default:
-                        //var suggestions = _autocompleteSuggestions.Where(td => td.Trim().ToLower().Contains(TextBoxSearch.Text.Trim().ToLower())).ToList();
-                        var suggestions = rootCategory.SearchItems(i =>
-                            i.Trim().ToLower().Contains(TextBoxSearch.Text.Trim().ToLower()));
+
+                        var query = TextBoxSearch.Text.Trim().ToLower();
+                        var suggestions = _rootCategory.SearchItems(item =>
+                        {
+                            if (item.Name.Trim().ToLower().Contains(query))
+                            {
+                                return true;
+                            }
+
+                            foreach (var tag in item.Tags)
+                            {
+                                if (tag.Trim().ToLower().Contains(query))
+                                {
+                                    return true;
+                                }
+                            }
+                            
+                            return false;
+                        });
+ 
                         if (TextBoxSearch.Text.Trim() != "" && suggestions.Count > 0)
                         {
                             PopupAutoComplete.IsOpen = true;
