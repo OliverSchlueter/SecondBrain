@@ -16,7 +16,24 @@
     <StackPanel>
         <Label HorizontalAlignment="Center">Search in your Second Brain</Label>
         <TextBox
+            Name="TextBoxSearch"
+            Padding="3"
             Width="300" 
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center"
+            KeyUp="TextBoxSearch_KeyUp"
+            LostFocus="TextBoxSearch_LostFocus"/>
+        <Popup x:Name="PopupAutoComplete"
+               Visibility="Collapsed"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PlacementTarget="{Binding ElementName=TextBoxSearch}"
+               Width="300"
+               Placement="Bottom">
+            <ListBox x:Name="ListBoxAutoCompleteResults"
+                     Background="WhiteSmoke"
+                     MaxHeight="200"
+                     Margin="20 0"
+                     SelectionChanged="ListBoxAutoCompleteResults_SelectionChanged"/>
+        </Popup>
     </StackPanel>
 </Window>
