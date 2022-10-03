@@ -1,6 +1,4 @@
 ﻿using System;
-using DesktopApp.notes;
-
 namespace DesktopApp
 {
     /// <summary>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace DesktopApp.notes
 {
@@ -8,14 +10,12 @@ namespace DesktopApp.notes
         public string Number { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        
 
-        public ContactNote(DateTime timeCreated, string number, string firstName, string lastName) : base(firstName + " " + lastName, timeCreated)
+        public ContactNote(DateTime timeCreated, string number, string firstName, string lastName) : base(NoteType.Contact, firstName + " " + lastName, timeCreated)
         {
             Number = number;
             FirstName = firstName;
             LastName = lastName;
-            
             Tags.Add(Number);
         }
 

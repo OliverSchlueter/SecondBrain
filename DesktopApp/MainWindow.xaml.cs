@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DesktopApp.notes;
+using DesktopApp.utils;
 
 namespace DesktopApp
 {
@@ -11,7 +13,7 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow
     {
-        private Category<Note> _rootCategory = new Category<Note>("");
+        private readonly Category<Note> _rootCategory = new("");
         public MainWindow()
         {
             InitializeComponent();
@@ -23,8 +25,13 @@ namespace DesktopApp
             contactsCategory.Values.Add(new ContactNote(DateTime.Now, "+49 445566", "Max", "Mustermann"));
             
             var quickNotesCategory = _rootCategory.AddSubCategory("Quick Notes");
-            quickNotesCategory.Values.Add(new PlaintextNote("today", DateTime.Now,"Pog"));
+            quickNotesCategory.Values.Add(new PlaintextNote("today", DateTime.Now, "today.txt"));
+
+
             
+            File.WriteAllText("temp.json", JsonUtils.Serialize(_rootCategory));
+            //var cat = Category<Note>.DeserializeNoteCategory(JsonUtils.Deserialize(File.ReadAllText("temp.json")));
+            //_rootCategory = cat;
             _rootCategory.ToTreeView(TreeViewOverview);
         }
         
