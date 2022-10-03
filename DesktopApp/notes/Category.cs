@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DesktopApp.notes
 {
@@ -46,9 +48,25 @@ namespace DesktopApp.notes
 
             return results;
         }
-        
+
+        public TreeView ToTreeView()
+        {
+            var treeView = new TreeView();
+            ToTreeView(treeView);
+            return treeView;
+        }
         public void ToTreeView(TreeView root, TreeViewItem currentItem = null)
         {
+            root.MouseDoubleClick += (sender, args) =>
+            {
+                if (root.SelectedItem is Note note)
+                {
+                    note.OnClick();
+                }
+                
+                args.Handled = true;
+            };
+            
             if (Name.Equals(string.Empty))
             {
                 foreach (var value in Values)
@@ -60,21 +78,26 @@ namespace DesktopApp.notes
                 {
                     var sub = new TreeViewItem
                     {
-                        Header = subCategory.Name
+                        Header = subCategory,
+                        Margin = new Thickness(0, 3, 0, 3)
                     };
+
+                    sub.Resources.Add(SystemColors.HighlightBrushKey, new SolidColorBrush(Color.FromRgb(145, 242, 172)));
+                    sub.Resources.Add(SystemColors.HighlightTextBrushKey, new SolidColorBrush(Color.FromRgb(21, 133, 51)));
+                    
                     root.Items.Add(sub);
                     subCategory.ToTreeView(root, sub);
                 }
                 return;
             }
-            
+
             if (currentItem == null)
             {
                 currentItem = new TreeViewItem
                 {
-                    Header = Name
+                    Header = this
                 };
-
+                
                 root.Items.Add(currentItem);
             }
 
@@ -87,12 +110,16 @@ namespace DesktopApp.notes
             {
                 var sub = new TreeViewItem
                 {
-                    Header = subCategory.Name
+                    Header = subCategory
                 };
                 currentItem.Items.Add(sub);
                 subCategory.ToTreeView(root, sub);
             }
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

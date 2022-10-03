@@ -24,6 +24,8 @@ namespace DesktopApp.notes
             Tags = new List<string> { Name };
         }
 
+        public abstract void OnClick();
+
         public abstract string ToJson();
     }
 }

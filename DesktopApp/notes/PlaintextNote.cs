@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace DesktopApp.notes
 {
@@ -20,6 +21,11 @@ namespace DesktopApp.notes
         public override string ToJson()
         {
             throw new NotImplementedException();
+        }
+
+        public override void OnClick()
+        {
+            MessageBox.Show($"Clicked {Name}");
         }
 
         public override string ToString()
