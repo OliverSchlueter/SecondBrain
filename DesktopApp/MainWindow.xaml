@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="Second Brain" 
+        Title="My Second Brain" 
         MinHeight="500"
-        Height="500"
-        MinWidth="500"
-        Width="500"
+        Height="700"
+        MinWidth="1000"
+        Width="1000"
+        MaxWidth="1000"
         Padding="10"
         WindowStartupLocation="CenterScreen"
         FontSize="15">
@@ -35,36 +36,63 @@
         </Setter>
         </Style>
     </Window.Resources>
-    
-    <StackPanel>
-        <Label 
-            HorizontalAlignment="Center"
-            Margin="0 10 0 0">
-            Search in your Second Brain
-        </Label>
-        <TextBox
-            Name="TextBoxSearch"
-            Padding="3"
-            Width="300" 
-            HorizontalAlignment="Center"
-            KeyUp="TextBoxSearch_KeyUp"
-            LostFocus="TextBoxSearch_LostFocus"/>
-        <Popup x:Name="PopupAutoComplete"
-               Visibility="Collapsed"
-               StaysOpen="False"
-               AllowsTransparency="True"
-               PlacementTarget="{Binding ElementName=TextBoxSearch}"
-               Width="300"
-               Placement="Bottom">
-            <ListBox x:Name="ListBoxAutoCompleteResults"
-                     ItemContainerStyle="{StaticResource ListBoxStyle}" AlternationCount="2"
-                     Background="WhiteSmoke"
-                     MaxHeight="200"
-                     Margin="0 0"
-                     SelectionChanged="ListBoxAutoCompleteResults_SelectionChanged"/>
-        </Popup>
-        <TreeView Name="TreeViewOverview"
-            Margin="0 20 0 0"/>
-
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Name="StackPanelSidebar"
+                    Margin="0 0 10 0"
+                    MinWidth="350">
+            <Label 
+                Margin="0 10 0 0"
+                FontWeight="Bold"
+                FontSize="20">
+                Overview
+            </Label>
+            <TreeView Name="TreeViewOverview"
+                      BorderBrush="Transparent"
+                      Margin="0 5 0 0"/>
+        </StackPanel>
+        <Canvas
+            Margin="10 0 10 0">
+            <Line 
+                X1="0" X2="0" 
+                Y1="-1000" 
+                Y2="2000" 
+                Stroke="Black" 
+                Opacity="0.5"></Line>
+        </Canvas>
+        <StackPanel Name="StackPanelMain"
+                    Width="600">
+            <Label 
+                HorizontalAlignment="Center"
+                Margin="0 10 0 0"
+                FontSize="18">
+                Search in your Second Brain
+            </Label>
+            <TextBox
+                Name="TextBoxSearch"
+                Padding="3"
+                Width="300" 
+                HorizontalAlignment="Center"
+                KeyUp="TextBoxSearch_KeyUp"
+                LostFocus="TextBoxSearch_LostFocus"/>
+            <StackPanel Name="StackPanelSearchResults">
+                <Label>Result 1</Label>
+                <Label>Result 2</Label>
+                <Label>Result 3</Label>
+            </StackPanel>
+            <Popup x:Name="PopupAutoComplete"
+                   Visibility="Collapsed"
+                   StaysOpen="False"
+                   AllowsTransparency="True"
+                   PlacementTarget="{Binding ElementName=TextBoxSearch}"
+                   Width="300"
+                   Placement="Bottom">
+                <ListBox x:Name="ListBoxAutoCompleteResults"
+                         ItemContainerStyle="{StaticResource ListBoxStyle}" AlternationCount="2"
+                         Background="WhiteSmoke"
+                         MaxHeight="200"
+                         Margin="0 0"
+                         SelectionChanged="ListBoxAutoCompleteResults_SelectionChanged"/>
+            </Popup>
+        </StackPanel>
     </StackPanel>
 </Window>
