@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DesktopApp.notes;
 
 namespace DesktopApp
 {
@@ -12,14 +11,21 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow
     {
+        Category<string> rootCategory = new Category<string>("");
         public MainWindow()
         {
             InitializeComponent();
+
+            
+            var sub1 = rootCategory.AddSubCategory("Contacts");
+            sub1.Values.Add("Oliver Schlüter");
+            sub1.Values.Add("Max Mustermann");
+            var sub2 = rootCategory.AddSubCategory("Notes");
+            sub2.Values.Add("Note1");
+            sub2.Values.Add("Note2");
+            rootCategory.ToTreeView(TreeViewOverview);
         }
         
-        
-        private readonly List<string> _autocompleteSuggestions = new List<string> {"Pdf File","AVI File","JPEG file","MP3 sound","MP4 Video"};
-
         private void ListBoxAutoCompleteResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -42,7 +48,7 @@ namespace DesktopApp
                     case Key.Enter:
                         MessageBox.Show(
                             "Searching with: '" + TextBoxSearch.Text + "'", 
-                            "Seach", 
+                            "Search", 
                             MessageBoxButton.OKCancel, 
                             MessageBoxImage.Information, 
                             MessageBoxResult.OK);
@@ -52,20 +58,31 @@ namespace DesktopApp
                         {
                             ListBoxAutoCompleteResults.SelectedIndex--;   
                         }
+                        else
+                        {
+                            ListBoxAutoCompleteResults.SelectedIndex = ListBoxAutoCompleteResults.Items.Count-1;
+                        }
                         break;
                     case Key.Down:
-                        if (ListBoxAutoCompleteResults.SelectedIndex < ListBoxAutoCompleteResults.Items.Count)
+                        if (ListBoxAutoCompleteResults.SelectedIndex < ListBoxAutoCompleteResults.Items.Count-1)
                         {
                             ListBoxAutoCompleteResults.SelectedIndex++;
+                        }
+                        else
+                        {
+                            ListBoxAutoCompleteResults.SelectedIndex = 0;
                         }
 
                         break;
                     default:
-                        if (TextBoxSearch.Text.Trim() != "")
+                        //var suggestions = _autocompleteSuggestions.Where(td => td.Trim().ToLower().Contains(TextBoxSearch.Text.Trim().ToLower())).ToList();
+                        var suggestions = rootCategory.SearchItems(i =>
+                            i.Trim().ToLower().Contains(TextBoxSearch.Text.Trim().ToLower()));
+                        if (TextBoxSearch.Text.Trim() != "" && suggestions.Count > 0)
                         {
                             PopupAutoComplete.IsOpen = true;
                             PopupAutoComplete.Visibility = Visibility.Visible;
-                            ListBoxAutoCompleteResults.ItemsSource = _autocompleteSuggestions.Where(td => td.Trim().ToLower().Contains(TextBoxSearch.Text.Trim().ToLower()));
+                            ListBoxAutoCompleteResults.ItemsSource = suggestions;
                         }
                         else
                         {

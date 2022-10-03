@@ -13,8 +13,35 @@
         Padding="10"
         WindowStartupLocation="CenterScreen"
         FontSize="15">
+    <Window.Resources>
+        <Style x:Key="ListBoxStyle" TargetType="ListBoxItem">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border" Background="Transparent" Padding="7" SnapsToDevicePixels="True">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ListBoxItem.IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="#d4d4d4"/>
+                        </Trigger>
+                        <Trigger Property="ListBoxItem.IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        </Style>
+    </Window.Resources>
+    
     <StackPanel>
-        <Label HorizontalAlignment="Center">Search in your Second Brain</Label>
+        <Label 
+            HorizontalAlignment="Center"
+            Margin="0 10 0 0">
+            Search in your Second Brain
+        </Label>
         <TextBox
             Name="TextBoxSearch"
             Padding="3"
@@ -30,10 +57,14 @@
                Width="300"
                Placement="Bottom">
             <ListBox x:Name="ListBoxAutoCompleteResults"
+                     ItemContainerStyle="{StaticResource ListBoxStyle}" AlternationCount="2"
                      Background="WhiteSmoke"
                      MaxHeight="200"
-                     Margin="20 0"
+                     Margin="0 0"
                      SelectionChanged="ListBoxAutoCompleteResults_SelectionChanged"/>
         </Popup>
+        <TreeView Name="TreeViewOverview"
+            Margin="0 20 0 0"/>
+
     </StackPanel>
 </Window>
