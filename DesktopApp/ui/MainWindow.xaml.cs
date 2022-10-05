@@ -4,18 +4,24 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DesktopApp.notes;
+
 using DesktopApp.utils;
 
-namespace DesktopApp
+namespace DesktopApp.ui
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
+        public static MainWindow Instance { get; private set; }
+        
         private readonly Category<Note> _rootCategory = new("");
         public MainWindow()
         {
+            if (Instance == null)
+                Instance = this;
+
             InitializeComponent();
 
             Title = Title + " " + App.Version;
@@ -32,6 +38,8 @@ namespace DesktopApp
             File.WriteAllText("temp.json", JsonUtils.Serialize(_rootCategory));
             //var cat = Category<Note>.DeserializeNoteCategory(JsonUtils.Deserialize(File.ReadAllText("temp.json")));
             //_rootCategory = cat;
+
+
             _rootCategory.ToTreeView(TreeViewOverview);
         }
         
@@ -132,6 +140,81 @@ namespace DesktopApp
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void ButtonAddCategory_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TreeViewOverview.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Please select a category, where you want to create a sub-category in.",
+                    "Add Category",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            Category<Note> category = null;
+
+            if (TreeViewOverview.SelectedItem.GetType() == typeof(TreeViewItem) && ((TreeViewItem)TreeViewOverview.SelectedItem).Header is Category<Note> c)
+            {
+                category = c;
+            }
+            
+            if(category == null)
+            {
+                MessageBox.Show(
+                    "Please select a category, where you want to create a sub-category in.",
+                    "Add Category",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            var newCategoryWindow = new NewCategoryWindow(category);
+            newCategoryWindow.Show();
+        }
+
+        private void ButtonAddNote_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TreeViewOverview.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Please select a category, where you want to create a note in.",
+                    "Add Note",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            Category<Note> category = null;
+
+            if (TreeViewOverview.SelectedItem.GetType() == typeof(TreeViewItem) && ((TreeViewItem)TreeViewOverview.SelectedItem).Header is Category<Note> c)
+            {
+                category = c;
+            }
+            
+            if(category == null)
+            {
+                MessageBox.Show(
+                    "Please select a category, where you want to create a note in.",
+                    "Add Note",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            MessageBox.Show("This function is still in development");
+        }
+
+        public void UpdateTreeView()
+        {
+            TreeViewOverview.Items.Clear();
+            _rootCategory.ToTreeView(TreeViewOverview);
         }
     }
 }

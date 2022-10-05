@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using DesktopApp.utils;
 using Newtonsoft.Json.Linq;
 
 namespace DesktopApp.notes
@@ -118,6 +119,11 @@ namespace DesktopApp.notes
                 currentItem.Items.Add(sub);
                 subCategory.ToTreeView(root, sub);
             }
+        }
+
+        public void Save(string path)
+        {
+            File.WriteAllText(path, JsonUtils.Serialize(this));
         }
 
         public override string ToString()

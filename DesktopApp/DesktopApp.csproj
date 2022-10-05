@@ -55,12 +55,15 @@
         <Compile Include="notes\AlreadyUnloadedException.cs" />
         <Compile Include="notes\ILoadable.cs" />
         <Compile Include="notes\NoteType.cs" />
+        <Compile Include="ui\MainWindow.xaml.cs">
+          <DependentUpon>MainWindow.xaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Include="ui\NewCategoryWindow.xaml.cs">
+          <DependentUpon>NewCategoryWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="utils\JsonUtils.cs" />
         <Page Include="App.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-        <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
@@ -68,10 +71,11 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Include="MainWindow.xaml.cs">
-            <DependentUpon>MainWindow.xaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
+        <Page Include="ui\MainWindow.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Include="ui\NewCategoryWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="notes\Category.cs" />

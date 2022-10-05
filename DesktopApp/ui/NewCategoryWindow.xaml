@@ -1,0 +1,45 @@
+﻿<Window x:Class="DesktopApp.ui.NewCategoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:DesktopApp.ui"
+        mc:Ignorable="d"
+        Title="NewCategoryWindow" 
+        MinHeight="100"
+        Height="150"
+        MaxHeight="150"
+        Width="350"
+        MinWidth="350"
+        MaxWidth="350"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <StackPanel>
+        <Label Name="LabelHeadline"
+               FontSize="15"
+               FontWeight="Bold"
+               Margin="0 0 0 7">
+            Create new sub-category in
+        </Label>
+        <StackPanel 
+            Orientation="Horizontal"
+            Margin="0 0 0 10">
+            <Label
+                FontSize="12">
+                Name
+            </Label>
+            <TextBox Name="TextBoxName"
+                Width="200"
+                VerticalAlignment="Center"></TextBox>
+        </StackPanel>
+        <Button Name="ButtonCreate"
+            Width="100" 
+            HorizontalAlignment="Left"
+            Margin="10 0 0 0"
+            Cursor="Hand"
+            Click="ButtonCreate_OnClick">
+            Create
+        </Button>
+    </StackPanel>
+</Window>
