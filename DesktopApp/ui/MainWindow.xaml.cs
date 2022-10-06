@@ -210,11 +210,5 @@ namespace DesktopApp.ui
 
             MessageBox.Show("This function is still in development");
         }
-
-        public void UpdateTreeView()
-        {
-            TreeViewOverview.Items.Clear();
-            _rootCategory.ToTreeView(TreeViewOverview);
-        }
     }
 }

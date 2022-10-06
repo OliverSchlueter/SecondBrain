@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using DesktopApp.notes;
 
 namespace DesktopApp.ui;
@@ -27,9 +28,17 @@ public partial class NewCategoryWindow : Window
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         
-        _rootCategory.AddSubCategory(name);
+        var subCategory = _rootCategory.AddSubCategory(name);
         
-        MainWindow.Instance.UpdateTreeView();
+        var newTreeView = new TreeViewItem
+        {
+            Header = subCategory,
+            Margin = new Thickness(0, 3, 0, 3)
+        };
+        
+        subCategory.TreeViewItem = newTreeView;
+        
+        _rootCategory.TreeViewItem.Items.Add(newTreeView);
 
         MessageBox.Show(
             $"Successfully created new sub-category: '{name}'.", 

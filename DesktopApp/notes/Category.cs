@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DesktopApp.utils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace DesktopApp.notes
@@ -15,6 +16,8 @@ namespace DesktopApp.notes
         public string Name { get; private set; }
         public List<T> Values { get; set; }
         public List<Category<T>> SubCategories { get; set; }
+        [JsonIgnore]
+        public TreeViewItem TreeViewItem { get; set; }
 
         public Category(string name)
         {
@@ -90,6 +93,7 @@ namespace DesktopApp.notes
                     sub.Resources.Add(SystemColors.HighlightTextBrushKey, new SolidColorBrush(Color.FromRgb(21, 133, 51)));
                     
                     root.Items.Add(sub);
+                    subCategory.TreeViewItem = sub;
                     subCategory.ToTreeView(root, sub);
                 }
                 return;
