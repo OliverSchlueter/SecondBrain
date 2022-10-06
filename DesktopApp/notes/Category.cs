@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using DesktopApp.ui;
 using DesktopApp.utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -32,6 +34,69 @@ namespace DesktopApp.notes
             {
                 _treeViewItem = value;
                 _treeViewItem.Foreground = new SolidColorBrush(Colors.Green);
+                _treeViewItem.KeyUp += (sender, args) =>
+                {
+                    if (args.Key != Key.Delete)
+                    {
+                        return;
+                    }
+
+                    var source = (TreeViewItem) args.OriginalSource;
+
+                    if (source.Header is Category<Note> category)
+                    {
+                        var confirm = MessageBox.Show(
+                            $"Do you want to permanently delete the '{Name}' Category?",
+                            "Delete Category",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning
+                        );
+
+                        if (confirm == MessageBoxResult.Yes)
+                        {
+                            if (_treeViewItem.Parent is TreeViewItem parent)
+                            {
+                                parent.Items.Remove(_treeViewItem);
+                            } 
+                            else if (_treeViewItem.Parent is TreeView)
+                            {
+                                MessageBox.Show(
+                                    "You can not delete this category.", 
+                                    "Delete Category",
+                                    MessageBoxButton.OK, 
+                                    MessageBoxImage.Error
+                                    );
+                                
+                                return;
+                            }
+                            
+                            MainWindow.Instance.RootCategory.RemoveSubCategory(category);
+                            args.Handled = true;
+                        }
+                    }
+                    else if (source.Header is T note)
+                    {
+                        if (!Values.Contains(note))
+                        {
+                            return;
+                        }
+                        
+                        var confirm = MessageBox.Show(
+                            $"Do you want to permanently delete the '{note.ToString()}' Note?",
+                            "Delete Note",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning
+                        );
+
+                        if (confirm == MessageBoxResult.Yes)
+                        {
+                            _treeViewItem.Items.Remove(note);
+                            Values.Remove(note);
+                            args.Handled = true;
+                        }
+                    }
+                };
+
             }
         }
 
@@ -51,6 +116,25 @@ namespace DesktopApp.notes
             return category;
         }
 
+        public bool RemoveSubCategory(Category<T> subCategory)
+        {
+            if (SubCategories.Contains(subCategory))
+            {
+                SubCategories.Remove(subCategory);
+                return true;
+            }
+
+            foreach (var sc in SubCategories)
+            {
+                if (sc.RemoveSubCategory(subCategory))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         public List<T> SearchItems(Func<T, bool> condition)
         {
             var results = new List<T>();
@@ -121,7 +205,6 @@ namespace DesktopApp.notes
                 {
                     Header = this
                 };
-                
                 root.Items.Add(currentItem);
             }
 

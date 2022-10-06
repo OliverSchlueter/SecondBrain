@@ -18,6 +18,11 @@ namespace DesktopApp.ui
         
         private readonly Category<Note> _rootCategory = new("");
         
+        public Category<Note> RootCategory
+        {
+            get => _rootCategory;
+        }
+
         public MainWindow()
         {
             if (Instance == null)
@@ -211,5 +216,6 @@ namespace DesktopApp.ui
 
             MessageBox.Show("This function is still in development");
         }
+        
     }
 }
