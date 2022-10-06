@@ -17,6 +17,7 @@ namespace DesktopApp.ui
         public static MainWindow Instance { get; private set; }
         
         private readonly Category<Note> _rootCategory = new("");
+        
         public MainWindow()
         {
             if (Instance == null)

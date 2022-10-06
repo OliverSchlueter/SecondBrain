@@ -13,11 +13,27 @@ namespace DesktopApp.notes
     public class Category<T>
     {
         public string CategoryType { get => typeof(T).Name; }
+        
         public string Name { get; private set; }
+        
         public List<T> Values { get; set; }
+        
         public List<Category<T>> SubCategories { get; set; }
+        
         [JsonIgnore]
-        public TreeViewItem TreeViewItem { get; set; }
+        private TreeViewItem _treeViewItem;
+        
+        [JsonIgnore]
+        public TreeViewItem TreeViewItem
+        {
+            get => _treeViewItem;
+
+            set
+            {
+                _treeViewItem = value;
+                _treeViewItem.Foreground = new SolidColorBrush(Colors.Green);
+            }
+        }
 
         public Category(string name)
         {

@@ -8,7 +8,9 @@ namespace DesktopApp.notes
     public class ContactNote : Note
     {
         public string Number { get; set; }
+        
         public string FirstName { get; set; }
+        
         public string LastName { get; set; }
 
         public ContactNote(DateTime timeCreated, string number, string firstName, string lastName) : base(NoteType.Contact, firstName + " " + lastName, timeCreated)

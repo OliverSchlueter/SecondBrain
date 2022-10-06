@@ -10,6 +10,7 @@ namespace DesktopApp.notes
     {
         [JsonIgnore]
         public string Content { get; set; }
+        
         public string PathToContent { get; set; }
         
         public PlaintextNote(string name, List<string> tags, DateTime timeCreated, string pathToContent) : base(NoteType.Plaintext, name, tags, timeCreated)

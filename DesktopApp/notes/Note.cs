@@ -7,9 +7,13 @@ namespace DesktopApp.notes
     public abstract class Note
     {
         public NoteType NoteType { get; }
+        
         public string Name { get; set; }
+        
         public List<string> Tags { get; set; }
+        
         public DateTime TimeCreated { get; protected set; }
+        
         [JsonIgnore]
         public bool IsLoaded { get; protected set; }
 
