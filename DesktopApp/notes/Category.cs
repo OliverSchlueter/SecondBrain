@@ -69,10 +69,11 @@ namespace DesktopApp.notes
                                 
                                 return;
                             }
-                            
+
                             MainWindow.Instance.RootCategory.RemoveSubCategory(category);
-                            args.Handled = true;
                         }
+                        
+                        args.Handled = true;
                     }
                     else if (source.Header is T note)
                     {
@@ -92,8 +93,9 @@ namespace DesktopApp.notes
                         {
                             _treeViewItem.Items.Remove(note);
                             Values.Remove(note);
-                            args.Handled = true;
                         }
+                        
+                        args.Handled = true;
                     }
                 };
 
