@@ -17,9 +17,4 @@ public static class JsonUtils
     {
         return JsonConvert.SerializeObject(obj, Formatting.Indented);
     }
-
-    public static List<JProperty> JObject2JProperties(JObject jObject)
-    {
-        return jObject.Properties().ToList();
-    }
 }

@@ -47,6 +47,7 @@ public partial class NewContactNoteWindow : Window
         }
 
         var contactNote = new ContactNote(DateTime.Now, telNumber, firstName, lastName);
+        contactNote.AddDefaultTags();
         
         _category.Values.Add(contactNote);
         

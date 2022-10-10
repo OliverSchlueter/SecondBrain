@@ -4,10 +4,10 @@ namespace DesktopApp.notes;
 
 public class AlreadyLoadedException : Exception
 {
-    public Note Note { get; private set; }
+    private Note _note;
     
     public AlreadyLoadedException(Note note) : base($"Note '{note.Name}' is already loaded")
     {
-        Note = note;
+        _note = note;
     }
 }

@@ -178,7 +178,7 @@ namespace DesktopApp.notes
                                 Items =
                                 {
                                     new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, NoteType.Contact) },
-                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext) },
+                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext), IsEnabled = false },
                                 }
                             },
                             new MenuItem { Header = "Add sub-category", Command = new NewCategoryCommand(category) },
