@@ -7,7 +7,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using DesktopApp.notes.commands;
-using DesktopApp.ui;
 using DesktopApp.utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -68,7 +67,7 @@ namespace DesktopApp.notes
 
                         if (confirm == MessageBoxResult.Yes)
                         {
-                            _treeViewItem.Items.Remove(note);
+                            _treeViewItem.Items.Remove(source);
                             Values.Remove(note);
                         }
                         
@@ -178,13 +177,37 @@ namespace DesktopApp.notes
                                 Header = "Add Note",
                                 Items =
                                 {
-                                    new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, typeof(ContactNote)) },
-                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, typeof(PlaintextNote)) },
+                                    new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, NoteType.Contact) },
+                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext) },
                                 }
                             },
                             new MenuItem { Header = "Add sub-category", Command = new NewCategoryCommand(category) },
                             new MenuItem { Header = "Delete", Command = new DeleteCategoryCommand(category) },
-                            new MenuItem { Header = "Rename" },
+                            new MenuItem { Header = "Rename", IsEnabled = false },
+                        }
+                    };
+
+                    ((TreeViewItem)args.Source).ContextMenu = contextMenu;
+                }
+                else if (((TreeViewItem)args.Source).Header is Note note)
+                {
+                    var parent = (TreeViewItem) ((TreeViewItem)args.Source).Parent;
+                    Category<Note> categoryOfNote = null;
+
+                    if (parent.Header is Category<Note> c)
+                    {
+                        categoryOfNote = c;
+                    }
+                    
+                    var contextMenu = new ContextMenu{
+                        Placement = PlacementMode.Mouse,
+                        IsOpen = true,
+                        Visibility = Visibility.Visible,
+                        StaysOpen = false,
+                        Items =
+                        {
+                            new MenuItem { Header = "Delete", Command = new DeleteNoteCommand(categoryOfNote, note, (TreeViewItem)args.Source) },
+                            new MenuItem { Header = "Rename", IsEnabled = false },
                         }
                     };
 

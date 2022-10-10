@@ -55,6 +55,7 @@
         <Compile Include="notes\AlreadyUnloadedException.cs" />
         <Compile Include="notes\commands\AddNoteCommand.cs" />
         <Compile Include="notes\commands\DeleteCategoryCommand.cs" />
+        <Compile Include="notes\commands\DeleteNoteCommand.cs" />
         <Compile Include="notes\commands\NewCategoryCommand.cs" />
         <Compile Include="notes\ILoadable.cs" />
         <Compile Include="notes\NoteType.cs" />
@@ -64,6 +65,9 @@
         </Compile>
         <Compile Include="ui\NewCategoryWindow.xaml.cs">
           <DependentUpon>NewCategoryWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ui\newNoteWindows\NewContactNoteWindow.xaml.cs">
+          <DependentUpon>NewContactNoteWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="utils\JsonUtils.cs" />
         <Page Include="App.xaml">
@@ -79,6 +83,7 @@
           <SubType>Designer</SubType>
         </Page>
         <Page Include="ui\NewCategoryWindow.xaml" />
+        <Page Include="ui\newNoteWindows\NewContactNoteWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="notes\Category.cs" />

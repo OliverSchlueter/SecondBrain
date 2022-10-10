@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
+using DesktopApp.ui.newNoteWindows;
 
 namespace DesktopApp.notes.commands;
 
 public class AddNoteCommand : ICommand
 {
     private readonly Category<Note> _category;
-    private readonly Type _noteType;
+    private readonly NoteType _noteType;
 
-    public AddNoteCommand(Category<Note> category, Type noteType)
+    public AddNoteCommand(Category<Note> category, NoteType noteType)
     {
         _category = category;
         _noteType = noteType;
@@ -21,7 +22,15 @@ public class AddNoteCommand : ICommand
 
     public void Execute(object parameter)
     {
-        Console.WriteLine("[AddNoteCommand::Execute] Not implemented");
+        switch (_noteType)
+        {
+            case NoteType.Contact:
+                var newContactNoteWindow = new NewContactNoteWindow(_category, _noteType);
+                newContactNoteWindow.Show();
+                break;
+            case NoteType.Plaintext:
+                break;
+        }
     }
 
     public event EventHandler CanExecuteChanged;

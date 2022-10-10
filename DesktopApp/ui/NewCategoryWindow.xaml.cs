@@ -21,13 +21,6 @@ public partial class NewCategoryWindow : Window
 
         if (name.Length == 0) return;
 
-        if (name.Length > 16)
-            MessageBox.Show(
-                "The name can not be longer than 16 characters.", 
-                "Create new sub-category",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        
         var subCategory = _rootCategory.AddSubCategory(name);
         
         var newTreeView = new TreeViewItem

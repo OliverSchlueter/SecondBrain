@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DesktopApp.ui"
         mc:Ignorable="d"
-        Title="NewCategoryWindow" 
+        Title="New Category" 
         MinHeight="100"
         Height="150"
         MaxHeight="150"
@@ -17,29 +17,27 @@
         ShowInTaskbar="False">
     <StackPanel>
         <Label Name="LabelHeadline"
+               Content="Create new sub-category in"
                FontSize="15"
                FontWeight="Bold"
-               Margin="0 0 0 7">
-            Create new sub-category in
-        </Label>
+               Margin="0 0 0 7"/>
         <StackPanel 
             Orientation="Horizontal"
             Margin="0 0 0 10">
             <Label
-                FontSize="12">
-                Name
-            </Label>
+                Content="Name"
+                FontSize="12"/>
             <TextBox Name="TextBoxName"
                 Width="200"
-                VerticalAlignment="Center"></TextBox>
+                VerticalAlignment="Center"
+                MaxLength="16"/>
         </StackPanel>
         <Button Name="ButtonCreate"
+            Content="Create"
             Width="100" 
             HorizontalAlignment="Left"
             Margin="10 0 0 0"
             Cursor="Hand"
-            Click="ButtonCreate_OnClick">
-            Create
-        </Button>
+            Click="ButtonCreate_OnClick"/>
     </StackPanel>
 </Window>
