@@ -53,6 +53,9 @@
     <ItemGroup>
         <Compile Include="notes\AlreadyLoadedException.cs" />
         <Compile Include="notes\AlreadyUnloadedException.cs" />
+        <Compile Include="notes\commands\AddNoteCommand.cs" />
+        <Compile Include="notes\commands\DeleteCategoryCommand.cs" />
+        <Compile Include="notes\commands\NewCategoryCommand.cs" />
         <Compile Include="notes\ILoadable.cs" />
         <Compile Include="notes\NoteType.cs" />
         <Compile Include="ui\MainWindow.xaml.cs">

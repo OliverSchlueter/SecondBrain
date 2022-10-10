@@ -18,12 +18,12 @@ namespace DesktopApp.notes
             Number = number;
             FirstName = firstName;
             LastName = lastName;
-            Tags.Add(Number);
         }
 
-        public override string ToJson()
+        public override void AddDefaultTags()
         {
-            throw new NotImplementedException();
+            base.AddDefaultTags();
+            Tags.Add(Number);
         }
 
         public override void OnClick()

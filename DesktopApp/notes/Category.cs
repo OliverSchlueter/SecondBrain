@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using DesktopApp.notes.commands;
 using DesktopApp.ui;
 using DesktopApp.utils;
 using Newtonsoft.Json;
@@ -45,33 +47,8 @@ namespace DesktopApp.notes
 
                     if (source.Header is Category<Note> category)
                     {
-                        var confirm = MessageBox.Show(
-                            $"Do you want to permanently delete the '{Name}' Category?",
-                            "Delete Category",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning
-                        );
-
-                        if (confirm == MessageBoxResult.Yes)
-                        {
-                            if (_treeViewItem.Parent is TreeViewItem parent)
-                            {
-                                parent.Items.Remove(_treeViewItem);
-                            } 
-                            else if (_treeViewItem.Parent is TreeView)
-                            {
-                                MessageBox.Show(
-                                    "You can not delete this category.", 
-                                    "Delete Category",
-                                    MessageBoxButton.OK, 
-                                    MessageBoxImage.Error
-                                    );
-                                
-                                return;
-                            }
-
-                            MainWindow.Instance.RootCategory.RemoveSubCategory(category);
-                        }
+                        var deleteCategoryCommand = new DeleteCategoryCommand(category);
+                        deleteCategoryCommand.Execute(null);
                         
                         args.Handled = true;
                     }
@@ -168,9 +145,50 @@ namespace DesktopApp.notes
         {
             root.MouseDoubleClick += (sender, args) =>
             {
-                if (root.SelectedItem is Note note)
+                if (((TreeViewItem) root.SelectedItem).Header is Note note)
                 {
                     note.OnClick();
+                }
+
+                args.Handled = true;
+            };
+
+            root.MouseRightButtonUp += (sender, args) =>
+            {
+                if (args.Source is TreeViewItem treeViewItem)
+                {
+                    treeViewItem.Focus();
+                }
+                else
+                {
+                    return;
+                }
+                
+                if (((TreeViewItem) args.Source).Header is Category<Note> category)
+                {
+                    var contextMenu = new ContextMenu{
+                        Placement = PlacementMode.Mouse,
+                        IsOpen = true,
+                        Visibility = Visibility.Visible,
+                        StaysOpen = false,
+                        Items =
+                        {
+                            new MenuItem
+                            {
+                                Header = "Add Note",
+                                Items =
+                                {
+                                    new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, typeof(ContactNote)) },
+                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, typeof(PlaintextNote)) },
+                                }
+                            },
+                            new MenuItem { Header = "Add sub-category", Command = new NewCategoryCommand(category) },
+                            new MenuItem { Header = "Delete", Command = new DeleteCategoryCommand(category) },
+                            new MenuItem { Header = "Rename" },
+                        }
+                    };
+
+                    ((TreeViewItem)args.Source).ContextMenu = contextMenu;
                 }
                 
                 args.Handled = true;
@@ -180,7 +198,12 @@ namespace DesktopApp.notes
             {
                 foreach (var value in Values)
                 {
-                    root.Items.Add(value);
+                    var item = new TreeViewItem
+                    {
+                        Header = value
+                    };
+                    
+                    root.Items.Add(item);
                 }
 
                 foreach (var subCategory in SubCategories)
@@ -207,12 +230,18 @@ namespace DesktopApp.notes
                 {
                     Header = this
                 };
+                
                 root.Items.Add(currentItem);
             }
 
             foreach (var value in Values)
             {
-                currentItem.Items.Add(value);
+                var item = new TreeViewItem
+                {
+                    Header = value
+                };
+                
+                currentItem.Items.Add(item);
             }
 
             foreach (var subCategory in SubCategories)
@@ -221,14 +250,17 @@ namespace DesktopApp.notes
                 {
                     Header = subCategory
                 };
+
                 currentItem.Items.Add(sub);
+                subCategory.TreeViewItem = sub;
                 subCategory.ToTreeView(root, sub);
             }
         }
 
         public void Save(string path)
         {
-            File.WriteAllText(path, JsonUtils.Serialize(this));
+            File.WriteAllText(path + ".json", JsonUtils.Serialize(this));
+            File.WriteAllText(path + "-backup.json", JsonUtils.Serialize(this));
         }
 
         public override string ToString()

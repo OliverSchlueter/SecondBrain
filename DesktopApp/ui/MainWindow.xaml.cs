@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,10 +41,19 @@ namespace DesktopApp.ui
             quickNotesCategory.Values.Add(new PlaintextNote("today", DateTime.Now, "today.txt"));
 
 
-            
-            File.WriteAllText("temp.json", JsonUtils.Serialize(_rootCategory));
-            //var cat = Category<Note>.DeserializeNoteCategory(JsonUtils.Deserialize(File.ReadAllText("temp.json")));
-            //_rootCategory = cat;
+
+            if (File.Exists("data.json"))
+            {
+                try
+                {
+                    var cat = Category<Note>.DeserializeNoteCategory(JsonUtils.Deserialize(File.ReadAllText("data.json")));
+                    _rootCategory = cat;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Could not load root category data correctly.");
+                }
+            }
 
 
             _rootCategory.ToTreeView(TreeViewOverview);
@@ -148,74 +158,9 @@ namespace DesktopApp.ui
             }
         }
 
-        private void ButtonAddCategory_OnClick(object sender, RoutedEventArgs e)
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            if (TreeViewOverview.SelectedItem == null)
-            {
-                MessageBox.Show(
-                    "Please select a category, where you want to create a sub-category in.",
-                    "Add Category",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-
-                return;
-            }
-
-            Category<Note> category = null;
-
-            if (TreeViewOverview.SelectedItem.GetType() == typeof(TreeViewItem) && ((TreeViewItem)TreeViewOverview.SelectedItem).Header is Category<Note> c)
-            {
-                category = c;
-            }
-            
-            if(category == null)
-            {
-                MessageBox.Show(
-                    "Please select a category, where you want to create a sub-category in.",
-                    "Add Category",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-
-                return;
-            }
-
-            var newCategoryWindow = new NewCategoryWindow(category);
-            newCategoryWindow.Show();
+            _rootCategory.Save("data");
         }
-
-        private void ButtonAddNote_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (TreeViewOverview.SelectedItem == null)
-            {
-                MessageBox.Show(
-                    "Please select a category, where you want to create a note in.",
-                    "Add Note",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-
-                return;
-            }
-
-            Category<Note> category = null;
-
-            if (TreeViewOverview.SelectedItem.GetType() == typeof(TreeViewItem) && ((TreeViewItem)TreeViewOverview.SelectedItem).Header is Category<Note> c)
-            {
-                category = c;
-            }
-            
-            if(category == null)
-            {
-                MessageBox.Show(
-                    "Please select a category, where you want to create a note in.",
-                    "Add Note",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-
-                return;
-            }
-
-            MessageBox.Show("This function is still in development");
-        }
-        
     }
 }

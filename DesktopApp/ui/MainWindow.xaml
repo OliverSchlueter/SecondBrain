@@ -13,7 +13,8 @@
         MaxWidth="1000"
         Padding="10"
         WindowStartupLocation="CenterScreen"
-        FontSize="15">
+        FontSize="15"
+        Closing="MainWindow_OnClosing">
     <Window.Resources>
         <Style x:Key="ListBoxStyle" TargetType="ListBoxItem">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
@@ -41,23 +42,6 @@
         <StackPanel Name="StackPanelSidebar"
                     Margin="0 0 10 0"
                     MinWidth="350">
-            <StackPanel Orientation="Horizontal">
-                <Button Name="ButtonAddCategory"
-                    Margin="10 0 10 0"
-                    Padding="3"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonAddCategory_OnClick">
-                    Add Category
-                </Button>
-                <Button Name="ButtonAddNote"
-                    Padding="3"
-                    Background="Transparent"
-                    Cursor="Hand"
-                    Click="ButtonAddNote_OnClick">
-                    Add Note
-                </Button>
-            </StackPanel>
             <Label 
                 Margin="0 10 0 0"
                 FontWeight="Bold"

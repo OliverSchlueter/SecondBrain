@@ -22,7 +22,6 @@ namespace DesktopApp.notes
             NoteType = noteType;
             Name = name;
             Tags = tags;
-            Tags.Add(Name);
             TimeCreated = timeCreated;
             IsLoaded = false;
         }
@@ -38,6 +37,9 @@ namespace DesktopApp.notes
 
         public abstract void OnClick();
 
-        public abstract string ToJson();
+        public virtual void AddDefaultTags()
+        {
+            Tags.Add(Name);
+        }
     }
 }

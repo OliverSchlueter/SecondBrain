@@ -22,11 +22,6 @@ namespace DesktopApp.notes
         {
             PathToContent = pathToContent;
         }
-        
-        public override string ToJson()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void OnClick()
         {
