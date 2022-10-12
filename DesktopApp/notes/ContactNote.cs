@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace DesktopApp.notes
@@ -10,6 +11,13 @@ namespace DesktopApp.notes
         public string FirstName { get; }
         
         public string LastName { get; }
+
+        public ContactNote(DateTime timeCreated, List<string> tags, string number, string firstName, string lastName) : base(NoteType.Contact, firstName + " " + lastName, tags, timeCreated)
+        {
+            Number = number;
+            FirstName = firstName;
+            LastName = lastName;
+        }
 
         public ContactNote(DateTime timeCreated, string number, string firstName, string lastName) : base(NoteType.Contact, firstName + " " + lastName, timeCreated)
         {

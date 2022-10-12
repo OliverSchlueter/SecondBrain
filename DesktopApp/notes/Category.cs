@@ -352,7 +352,8 @@ namespace DesktopApp.notes
                     break;
                 case NoteType.Contact:
                     note = new ContactNote(
-                        DateTime.Parse(json["TimeCreated"].ToString()), 
+                        DateTime.Parse(json["TimeCreated"].ToString()),
+                        ((JArray) json["Tags"]).ToObject<List<string>>(),
                         json["Number"].ToString(),
                         json["FirstName"].ToString(),
                         json["LastName"].ToString());

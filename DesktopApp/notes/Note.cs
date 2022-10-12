@@ -31,8 +31,8 @@ namespace DesktopApp.notes
             NoteType = noteType;
             Name = name;
             TimeCreated = timeCreated;
-            Tags = new List<string> { Name };
             IsLoaded = false;
+            Tags = new List<string>();
         }
 
         public abstract void OnClick();
