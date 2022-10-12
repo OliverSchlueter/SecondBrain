@@ -46,7 +46,7 @@ namespace DesktopApp.ui
             {
                 try
                 {
-                    var cat = Category<Note>.DeserializeNoteCategory(JsonUtils.Deserialize(File.ReadAllText("data.json")));
+                    var cat = DeserializingHelper.DeserializeCategory(JsonUtils.Deserialize(File.ReadAllText("data.json")));
                     _rootCategory = cat;
                 }
                 catch (Exception e)

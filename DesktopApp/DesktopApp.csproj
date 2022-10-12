@@ -70,6 +70,7 @@
           <DependentUpon>NewContactNoteWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="utils\JsonUtils.cs" />
+        <Compile Include="utils\DeserializingHelper.cs" />
         <Page Include="App.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
