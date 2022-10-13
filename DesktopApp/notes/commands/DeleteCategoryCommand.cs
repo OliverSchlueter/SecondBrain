@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -45,6 +46,11 @@ public class DeleteCategoryCommand : ICommand
                 );
 
                 return;
+            }
+
+            foreach (var val in _category.Values)
+            {
+                val.Remove();
             }
 
             MainWindow.Instance.RootCategory.RemoveSubCategory(_category);

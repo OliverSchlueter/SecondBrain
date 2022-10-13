@@ -69,6 +69,9 @@
         <Compile Include="ui\newNoteWindows\NewContactNoteWindow.xaml.cs">
           <DependentUpon>NewContactNoteWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="ui\newNoteWindows\NewPlaintextNoteWindow.xaml.cs">
+          <DependentUpon>NewPlaintextNoteWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="utils\JsonUtils.cs" />
         <Compile Include="utils\DeserializingHelper.cs" />
         <Page Include="App.xaml">
@@ -85,6 +88,7 @@
         </Page>
         <Page Include="ui\NewCategoryWindow.xaml" />
         <Page Include="ui\newNoteWindows\NewContactNoteWindow.xaml" />
+        <Page Include="ui\newNoteWindows\NewPlaintextNoteWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="notes\Category.cs" />

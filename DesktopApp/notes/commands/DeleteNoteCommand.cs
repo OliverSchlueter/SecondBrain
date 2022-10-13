@@ -39,6 +39,7 @@ public class DeleteNoteCommand : ICommand
 
         if (confirm == MessageBoxResult.Yes)
         {
+            _note.Remove();
             _category.Values.Remove(_note);
             _category.TreeViewItem.Items.Remove(_noteSource);
         }

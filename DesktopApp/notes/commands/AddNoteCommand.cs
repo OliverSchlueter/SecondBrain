@@ -25,10 +25,12 @@ public class AddNoteCommand : ICommand
         switch (_noteType)
         {
             case NoteType.Contact:
-                var newContactNoteWindow = new NewContactNoteWindow(_category, _noteType);
+                var newContactNoteWindow = new NewContactNoteWindow(_category);
                 newContactNoteWindow.Show();
                 break;
             case NoteType.Plaintext:
+                var newPlaintextNoteWindow = new NewPlaintextNoteWindow(_category);
+                newPlaintextNoteWindow.Show();
                 break;
         }
     }

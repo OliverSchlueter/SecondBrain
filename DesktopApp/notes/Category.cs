@@ -58,18 +58,16 @@ namespace DesktopApp.notes
                             return;
                         }
                         
-                        var confirm = MessageBox.Show(
-                            $"Do you want to permanently delete the '{note.ToString()}' Note?",
-                            "Delete Note",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning
-                        );
+                        var parent = (TreeViewItem) ((TreeViewItem)args.Source).Parent;
+                        Category<Note> categoryOfNote = null;
 
-                        if (confirm == MessageBoxResult.Yes)
+                        if (parent.Header is Category<Note> c)
                         {
-                            _treeViewItem.Items.Remove(source);
-                            Values.Remove(note);
+                            categoryOfNote = c;
                         }
+
+                        var deleteNoteCommand = new DeleteNoteCommand(categoryOfNote, (Note)source.Header, value);
+                        deleteNoteCommand.Execute(null);
                         
                         args.Handled = true;
                     }
@@ -178,7 +176,7 @@ namespace DesktopApp.notes
                                 Items =
                                 {
                                     new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, NoteType.Contact) },
-                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext), IsEnabled = false },
+                                    new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext) },
                                 }
                             },
                             new MenuItem { Header = "Add sub-category", Command = new NewCategoryCommand(category) },

@@ -35,6 +35,11 @@ namespace DesktopApp.notes
             Tags = new List<string>();
         }
 
+        public virtual void Remove()
+        {
+            
+        }
+
         public abstract void OnClick();
 
         public virtual void AddDefaultTags()

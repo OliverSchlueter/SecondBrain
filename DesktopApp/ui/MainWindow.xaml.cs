@@ -42,11 +42,11 @@ namespace DesktopApp.ui
 
 
 
-            if (File.Exists("data.json"))
+            if (File.Exists($"{App.DataFolderPath}data.json"))
             {
                 try
                 {
-                    var cat = DeserializingHelper.DeserializeCategory(JsonUtils.Deserialize(File.ReadAllText("data.json")));
+                    var cat = DeserializingHelper.DeserializeCategory(JsonUtils.Deserialize(File.ReadAllText($"{App.DataFolderPath}data.json")));
                     _rootCategory = cat;
                 }
                 catch (Exception e)
@@ -160,7 +160,7 @@ namespace DesktopApp.ui
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            _rootCategory.Save("data");
+            _rootCategory.Save($"{App.DataFolderPath}data");
         }
     }
 }

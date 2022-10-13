@@ -13,6 +13,13 @@ namespace DesktopApp.notes
         
         public string PathToContent { get; }
         
+        public PlaintextNote(string name, DateTime timeCreated, string content, string pathToContent) : base(NoteType.Plaintext, name, timeCreated)
+        {
+            Content = content;
+            IsLoaded = true;
+            PathToContent = pathToContent;
+        }
+        
         public PlaintextNote(string name, List<string> tags, DateTime timeCreated, string pathToContent) : base(NoteType.Plaintext, name, tags, timeCreated)
         {
             PathToContent = pathToContent;
@@ -36,7 +43,16 @@ namespace DesktopApp.notes
 
         public override string ToString()
         {
-            return $"[PT] {Name}";
+            return $"{Name}.txt";
+        }
+
+        public override void Remove()
+        {
+            base.Remove();
+            if (File.Exists(PathToContent))
+            {
+                File.Delete(PathToContent);
+            }
         }
 
         public void Load()

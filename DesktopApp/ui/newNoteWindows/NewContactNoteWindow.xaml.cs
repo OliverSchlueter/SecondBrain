@@ -8,13 +8,11 @@ namespace DesktopApp.ui.newNoteWindows;
 public partial class NewContactNoteWindow : Window
 {
     private readonly Category<Note> _category;
-    private readonly NoteType _noteType;
-    
-    public NewContactNoteWindow(Category<Note> category, NoteType noteType)
+
+    public NewContactNoteWindow(Category<Note> category)
     {
         _category = category;
-        _noteType = noteType;
-        
+
         InitializeComponent();
     }
 
@@ -58,7 +56,7 @@ public partial class NewContactNoteWindow : Window
         
         MessageBox.Show(
             $"Successfully created new contact note.", 
-            "Created new sub-category",
+            "Created new note",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
         
