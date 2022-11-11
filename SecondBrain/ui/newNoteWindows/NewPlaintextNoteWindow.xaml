@@ -1,0 +1,48 @@
+<Window x:Class="SecondBrain.ui.newNoteWindows.NewPlaintextNoteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SecondBrain.ui.newNoteWindows"
+        mc:Ignorable="d"
+        Title="New Contact Note" 
+        MinHeight="500"
+        Height="500"
+        Width="350"
+        MinWidth="350"
+        MaxWidth="350"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <StackPanel>
+        <Label Name="LabelHeadline"
+               Content="Create new plaintext note"
+               FontSize="15"
+               FontWeight="Bold"
+               Margin="0 0 0 7"/>
+        <StackPanel 
+            Orientation="Horizontal"
+            Margin="0 0 0 10">
+            <Label
+                Content="Note name"
+                FontSize="12"/>
+            <TextBox Name="TextBoxNoteName"
+                     Width="200"
+                     VerticalAlignment="Center"
+                     MaxLength="32"/>
+        </StackPanel>
+        <Label
+            Content="Content"
+            FontSize="12"/>
+        <TextBox Name="TextBoxContent"
+            Margin="5 5 5 5"
+            MinHeight="250"/>
+        <Button Name="ButtonCreate"
+                Content="Add"
+                Width="100" 
+                HorizontalAlignment="Left"
+                Margin="10 0 0 0"
+                Cursor="Hand"
+                Click="ButtonCreate_OnClick"/>
+    </StackPanel>
+</Window>
