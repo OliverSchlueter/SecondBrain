@@ -74,6 +74,15 @@ namespace SecondBrain.utils{
                             json["FirstName"].ToString(),
                             json["LastName"].ToString());
                     break;
+                case NoteType.Learncard:
+                    note = new LearncardNote(
+                        ((JArray) json["Tags"]).ToObject<List<string>>(),
+                        DateTime.Parse(json["TimeCreated"].ToString()),
+                        json["Topic"].ToString(),
+                        json["Question"].ToString(),
+                        json["Answer"].ToString()
+                    );
+                    break;
             }
 
             if (note == null)

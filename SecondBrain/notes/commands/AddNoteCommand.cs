@@ -32,6 +32,10 @@ public class AddNoteCommand : ICommand
                 var newPlaintextNoteWindow = new NewPlaintextNoteWindow(_category);
                 newPlaintextNoteWindow.Show();
                 break;
+            case NoteType.Learncard:
+                var newLearncardNoteWindow = new NewLearncardNoteWindow(_category);
+                newLearncardNoteWindow.Show();
+                break;
         }
     }
 

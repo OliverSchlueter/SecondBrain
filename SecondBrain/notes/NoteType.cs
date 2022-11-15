@@ -3,5 +3,6 @@ namespace SecondBrain.notes;
 public enum NoteType
 {
     Plaintext,
-    Contact
+    Contact,
+    Learncard
 }

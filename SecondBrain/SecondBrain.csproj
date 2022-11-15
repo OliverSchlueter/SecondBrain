@@ -58,6 +58,7 @@
         <Compile Include="notes\commands\DeleteNoteCommand.cs" />
         <Compile Include="notes\commands\NewCategoryCommand.cs" />
         <Compile Include="notes\ILoadable.cs" />
+        <Compile Include="notes\LearncardNote.cs" />
         <Compile Include="notes\NoteType.cs" />
         <Compile Include="ui\MainWindow.xaml.cs">
           <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -68,6 +69,9 @@
         </Compile>
         <Compile Include="ui\newNoteWindows\NewContactNoteWindow.xaml.cs">
           <DependentUpon>NewContactNoteWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ui\newNoteWindows\NewLearncardNoteWindow.xaml.cs">
+          <DependentUpon>NewLearncardNoteWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="ui\newNoteWindows\NewPlaintextNoteWindow.xaml.cs">
           <DependentUpon>NewPlaintextNoteWindow.xaml</DependentUpon>
@@ -88,6 +92,7 @@
         </Page>
         <Page Include="ui\NewCategoryWindow.xaml" />
         <Page Include="ui\newNoteWindows\NewContactNoteWindow.xaml" />
+        <Page Include="ui\newNoteWindows\NewLearncardNoteWindow.xaml" />
         <Page Include="ui\newNoteWindows\NewPlaintextNoteWindow.xaml" />
     </ItemGroup>
     <ItemGroup>

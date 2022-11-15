@@ -177,6 +177,7 @@ namespace SecondBrain.notes
                                 {
                                     new MenuItem { Header = "Contact", Command = new AddNoteCommand(category, NoteType.Contact) },
                                     new MenuItem { Header = "Plaintext", Command = new AddNoteCommand(category, NoteType.Plaintext) },
+                                    new MenuItem { Header = "Learncard", Command = new AddNoteCommand(category, NoteType.Learncard) },
                                 }
                             },
                             new MenuItem { Header = "Add sub-category", Command = new NewCategoryCommand(category) },
