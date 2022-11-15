@@ -40,7 +40,9 @@ namespace SecondBrain.ui
             var quickNotesCategory = _rootCategory.AddSubCategory("Quick Notes");
             quickNotesCategory.Values.Add(new PlaintextNote("today", DateTime.Now, "today.txt"));
 
-
+            var learnCategory = _rootCategory.AddSubCategory("Learn");
+            var sen = learnCategory.AddSubCategory("Software Engineering");
+            sen.Values.Add(new LearncardNote(DateTime.Now, "Bits", "What is a bit", "0 or 1"));
 
             if (File.Exists($"{App.DataFolderPath}data.json"))
             {

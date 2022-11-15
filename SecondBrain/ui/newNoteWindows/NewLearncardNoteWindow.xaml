@@ -44,7 +44,7 @@
                      MaxLength="32"/>
         </StackPanel>
         <Label
-            Content="Content"
+            Content="Answer"
             FontSize="12"/>
         <TextBox Name="TextBoxAnswer"
                  Margin="5 5 5 5"
