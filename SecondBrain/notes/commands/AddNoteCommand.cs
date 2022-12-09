@@ -26,15 +26,15 @@ public class AddNoteCommand : ICommand
         {
             case NoteType.Contact:
                 var newContactNoteWindow = new NewContactNoteWindow(_category);
-                newContactNoteWindow.Show();
+                newContactNoteWindow.ShowDialog();
                 break;
             case NoteType.Plaintext:
                 var newPlaintextNoteWindow = new NewPlaintextNoteWindow(_category);
-                newPlaintextNoteWindow.Show();
+                newPlaintextNoteWindow.ShowDialog();
                 break;
             case NoteType.Learncard:
                 var newLearncardNoteWindow = new NewLearncardNoteWindow(_category);
-                newLearncardNoteWindow.Show();
+                newLearncardNoteWindow.ShowDialog();
                 break;
         }
     }

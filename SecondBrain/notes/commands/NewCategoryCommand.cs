@@ -21,7 +21,7 @@ public class NewCategoryCommand : ICommand
     public void Execute(object parameter)
     {
         var newCategoryWindow = new NewCategoryWindow(_category);
-        newCategoryWindow.Show();
+        newCategoryWindow.ShowDialog();
     }
 
     public event EventHandler CanExecuteChanged;

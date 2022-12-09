@@ -14,7 +14,8 @@
         Padding="10"
         WindowStartupLocation="CenterScreen"
         FontSize="15"
-        Closing="MainWindow_OnClosing">
+        Closing="MainWindow_OnClosing"
+        ResizeMode="CanMinimize">
     <Window.Resources>
         <Style x:Key="ListBoxStyle" TargetType="ListBoxItem">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
