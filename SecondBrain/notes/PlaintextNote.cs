@@ -62,9 +62,15 @@ namespace SecondBrain.notes
                 throw new AlreadyLoadedException(this);
             }
 
-            Content = File.ReadAllText(PathToContent);
-            
-            IsLoaded = true;
+            if (File.Exists(PathToContent))
+            {
+                Content = File.ReadAllText(PathToContent);
+                IsLoaded = true;   
+            }
+            else
+            {
+                Content = "Could not load contents";
+            }
         }
 
         public void Unload()
