@@ -34,7 +34,6 @@ namespace SecondBrain.notes
             set
             {
                 _treeViewItem = value;
-                _treeViewItem.Foreground = new SolidColorBrush(Colors.Green);
                 _treeViewItem.KeyUp += (sender, args) =>
                 {
                     if (args.Key != Key.Delete)
@@ -236,8 +235,8 @@ namespace SecondBrain.notes
                         Margin = new Thickness(0, 3, 0, 3)
                     };
 
-                    sub.Resources.Add(SystemColors.HighlightBrushKey, new SolidColorBrush(Color.FromRgb(145, 242, 172)));
-                    sub.Resources.Add(SystemColors.HighlightTextBrushKey, new SolidColorBrush(Color.FromRgb(21, 133, 51)));
+                    sub.Resources.Add(SystemColors.HighlightBrushKey, new SolidColorBrush(Colors.Transparent));
+                    sub.Resources.Add(SystemColors.HighlightTextBrushKey, new SolidColorBrush(Color.FromRgb(171, 25, 14)));
                     
                     root.Items.Add(sub);
                     subCategory.TreeViewItem = sub;
