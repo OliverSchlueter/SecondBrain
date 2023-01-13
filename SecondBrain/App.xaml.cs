@@ -8,7 +8,7 @@ namespace SecondBrain
     /// </summary>
     public partial class App
     {
-        public const string Version = "v0.0.2 [DEV]";
+        public const string Version = "v0.0.3 [DEV]";
         public const string DataFolderPath = "data/";
         
         [STAThread]

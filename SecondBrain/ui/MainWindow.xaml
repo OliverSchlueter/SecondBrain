@@ -77,11 +77,8 @@
                 HorizontalAlignment="Center"
                 KeyUp="TextBoxSearch_KeyUp"
                 LostFocus="TextBoxSearch_LostFocus"/>
-            <StackPanel Name="StackPanelSearchResults">
-                <Label>Result 1</Label>
-                <Label>Result 2</Label>
-                <Label>Result 3</Label>
-            </StackPanel>
+            
+            <StackPanel Name="StackPanelSearchResults"/>
             <Popup x:Name="PopupAutoComplete"
                    Visibility="Collapsed"
                    StaysOpen="False"

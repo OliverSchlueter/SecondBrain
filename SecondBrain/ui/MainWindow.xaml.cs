@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -78,70 +79,66 @@ namespace SecondBrain.ui
 
         private void TextBoxSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
-                {
-                    case Key.Enter:
-                        MessageBox.Show(
-                            "Searching with: '" + TextBoxSearch.Text + "'", 
-                            "Search", 
-                            MessageBoxButton.OKCancel, 
-                            MessageBoxImage.Information, 
-                            MessageBoxResult.OK);
-                        break;
-                    case Key.Up:
-                        if (ListBoxAutoCompleteResults.SelectedIndex > 0)
-                        {
-                            ListBoxAutoCompleteResults.SelectedIndex--;   
-                        }
-                        else
-                        {
-                            ListBoxAutoCompleteResults.SelectedIndex = ListBoxAutoCompleteResults.Items.Count-1;
-                        }
-                        break;
-                    case Key.Down:
-                        if (ListBoxAutoCompleteResults.SelectedIndex < ListBoxAutoCompleteResults.Items.Count-1)
-                        {
-                            ListBoxAutoCompleteResults.SelectedIndex++;
-                        }
-                        else
-                        {
-                            ListBoxAutoCompleteResults.SelectedIndex = 0;
-                        }
+            switch (e.Key) 
+            {
+                case Key.Up:
+                    if (ListBoxAutoCompleteResults.SelectedIndex > 0)
+                    {
+                        ListBoxAutoCompleteResults.SelectedIndex--;   
+                    }
+                    else
+                    {
+                        ListBoxAutoCompleteResults.SelectedIndex = ListBoxAutoCompleteResults.Items.Count-1;
+                    }
+                    break;
+                case Key.Down:
+                    if (ListBoxAutoCompleteResults.SelectedIndex < ListBoxAutoCompleteResults.Items.Count-1)
+                    {
+                        ListBoxAutoCompleteResults.SelectedIndex++;
+                    }
+                    else
+                    {
+                        ListBoxAutoCompleteResults.SelectedIndex = 0;
+                    }
 
-                        break;
-                    default:
-                        var query = TextBoxSearch.Text.Trim().ToLower();
-                        var suggestions = _rootCategory.SearchItems(item =>
-                        {
-                            if (item.Name.Trim().ToLower().Contains(query))
-                            {
-                                return true;
-                            }
+                    break;
+                default:
+                    var query = TextBoxSearch.Text.Trim().ToLower();
+                    var suggestions = SearchNotes(query);
 
-                            foreach (var tag in item.Tags)
-                            {
-                                if (tag.Trim().ToLower().Contains(query))
-                                {
-                                    return true;
-                                }
-                            }
-                            
-                            return false;
-                        });
- 
-                        if (TextBoxSearch.Text.Trim() != "" && suggestions.Count > 0)
+                    if (TextBoxSearch.Text.Trim() != "" && suggestions.Count > 0)
+                    {
+                        PopupAutoComplete.IsOpen = true;
+                        PopupAutoComplete.Visibility = Visibility.Visible;
+                        ListBoxAutoCompleteResults.ItemsSource = suggestions;
+                    }
+                    else
+                    {
+                        PopupAutoComplete.IsOpen = false;
+                        PopupAutoComplete.Visibility = Visibility.Collapsed;
+                        ListBoxAutoCompleteResults.ItemsSource = null;
+                    }
+                    
+                    StackPanelSearchResults.Children.Clear();
+                    
+
+                    foreach (var suggestion in suggestions)
+                    {
+                        var item = new Label
                         {
-                            PopupAutoComplete.IsOpen = true;
-                            PopupAutoComplete.Visibility = Visibility.Visible;
-                            ListBoxAutoCompleteResults.ItemsSource = suggestions;
-                        }
-                        else
+                            Content = suggestion.Name,
+                            Visibility = Visibility.Visible,
+                            Cursor = Cursors.Hand,
+                        };
+                        
+                        item.MouseLeftButtonUp += (o, args) =>
                         {
-                            PopupAutoComplete.IsOpen = false;
-                            PopupAutoComplete.Visibility = Visibility.Collapsed;
-                            ListBoxAutoCompleteResults.ItemsSource = null;
-                        }
-                        break;
+                            suggestion.OnClick();
+                        };
+
+                        StackPanelSearchResults.Children.Add(item);
+                    }
+                    break;
                 }
             }
 
@@ -163,6 +160,32 @@ namespace SecondBrain.ui
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             _rootCategory.Save($"{App.DataFolderPath}data");
+        }
+
+        private List<Note> SearchNotes(string query)
+        {
+            return _rootCategory.SearchItems(item => 
+            {
+                if (item.Name.Trim().ToLower().Contains(query))
+                {
+                    return true;
+                }
+
+                if (item.ToString().Trim().ToLower().Contains(query))
+                {
+                    return true;
+                }
+
+                foreach (var tag in item.Tags)
+                {
+                    if (tag.Trim().ToLower().Contains(query))
+                    {
+                        return true;
+                    }
+                }
+                        
+                return false;
+            });
         }
     }
 }
